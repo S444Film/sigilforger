@@ -10,34 +10,14 @@ import { useState, useRef, useEffect, useCallback } from "react";
 //    - Monthly Subscription: £2.99 recurring/month
 // 3. Copy the Price IDs below
 // ============================================================
-const STRIPE_CONFIG = {
-  publishableKey: "pk_live_51O5ASwRimoMyYWlLteinGYGErfg6vhDLMNUiHnydvmpsWC9gMmBnhCWfaoJCfjkM02E7IikzmtiZayUFQzpuHZFn00kFdbWJuj",
-  prices: {
-    single: "price_1T4gWaRimoMyYWlLpmFrgEKV",
-    lifetime: "price_1T4gYHRimoMyYWlLNS1t9jly", 
-    monthly: "price_1T4gZQRimoMyYWlLgSglyNqQ",
-  }
+// ============================================================
+// STRIPE PAYMENT LINKS
+// ============================================================
+const PAYMENT_LINKS = {
+  single: "https://buy.stripe.com/14A00laibbqJ6Dg0hP7g400",
+  lifetime: "https://buy.stripe.com/cNi8wR61VdyR0eS1lT7g402",
+  monthly: "https://buy.stripe.com/bJe3cxeyr7at3r41lT7g401",
 };
-
-// Load Stripe.js
-const loadStripe = (() => {
-  let stripePromise = null;
-  return () => {
-    if (!stripePromise) {
-      stripePromise = new Promise((resolve) => {
-        if (window.Stripe) {
-          resolve(window.Stripe(STRIPE_CONFIG.publishableKey));
-          return;
-        }
-        const script = document.createElement("script");
-        script.src = "https://js.stripe.com/v3/";
-        script.onload = () => resolve(window.Stripe(STRIPE_CONFIG.publishableKey));
-        document.head.appendChild(script);
-      });
-    }
-    return stripePromise;
-  };
-})();
 
 // Sigil generation
 function hashCode(str) {
@@ -324,10 +304,9 @@ const TIERS = [
     name: "Single Sigil", 
     desc: "Unlock this sigil",
     price: "£0.99",
-    priceId: STRIPE_CONFIG.prices.single,
+    link: PAYMENT_LINKS.single,
     icon: "⬡",
     features: ["High-resolution 2000×2000 JPG", "No watermark", "Instant download"],
-    mode: "payment"
   },
   { 
     id: "monthly", 
@@ -335,22 +314,20 @@ const TIERS = [
     desc: "Unlimited sigils",
     price: "£2.99",
     sub: "/month",
-    priceId: STRIPE_CONFIG.prices.monthly,
+    link: PAYMENT_LINKS.monthly,
     icon: "↻",
     badge: "POPULAR",
     features: ["Unlimited sigil downloads", "High-resolution exports", "No watermarks", "Cancel anytime"],
-    mode: "subscription"
   },
   { 
     id: "lifetime", 
     name: "Lifetime Access", 
     desc: "Unlimited sigils forever",
     price: "£9.99",
-    priceId: STRIPE_CONFIG.prices.lifetime,
+    link: PAYMENT_LINKS.lifetime,
     icon: "∞",
     badge: "BEST VALUE",
     features: ["Unlimited sigil downloads", "High-resolution exports", "No watermarks ever", "One-time payment", "Future features included"],
-    mode: "payment"
   },
 ];
 
@@ -365,8 +342,6 @@ export default function SigilForge() {
   const [selectedTier, setSelectedTier] = useState("single");
   const [isPurchased, setIsPurchased] = useState(false);
   const [hasUnlimitedAccess, setHasUnlimitedAccess] = useState(false);
-  const [purchasing, setPurchasing] = useState(false);
-  const [stripeError, setStripeError] = useState(null);
   const [showSuccess, setShowSuccess] = useState(false);
   const canvasRef = useRef(null);
 
@@ -455,37 +430,18 @@ export default function SigilForge() {
     }, 1000);
   }, [desire, hasUnlimitedAccess]);
 
-  const handlePurchase = async () => {
-    setPurchasing(true);
-    setStripeError(null);
-
+  const handlePurchase = () => {
     const tier = TIERS.find(t => t.id === selectedTier);
     if (!tier) return;
 
+    // Save sigil data to restore after payment
     sessionStorage.setItem("sigil_pending", JSON.stringify({ 
       desire, 
       letters: uniqueLetters 
     }));
 
-    try {
-      const stripe = await loadStripe();
-      const currentUrl = window.location.origin + window.location.pathname;
-
-      const { error } = await stripe.redirectToCheckout({
-        lineItems: [{ price: tier.priceId, quantity: 1 }],
-        mode: tier.mode,
-        successUrl: `${currentUrl}?status=success&tier=${tier.id}`,
-        cancelUrl: `${currentUrl}?status=cancelled`,
-      });
-
-      if (error) {
-        setStripeError(error.message);
-        setPurchasing(false);
-      }
-    } catch (err) {
-      setStripeError("Failed to connect to payment service. Please try again.");
-      setPurchasing(false);
-    }
+    // Redirect to Stripe Payment Link
+    window.location.href = tier.link;
   };
 
   const downloadSigil = () => {
@@ -866,7 +822,7 @@ export default function SigilForge() {
 
       {/* Purchase Modal */}
       {showPurchaseModal && (
-        <div style={styles.modalOverlay} onClick={() => !purchasing && setShowPurchaseModal(false)}>
+        <div style={styles.modalOverlay} onClick={() => setShowPurchaseModal(false)}>
           <div style={styles.modal} onClick={(e) => e.stopPropagation()}>
             <button style={styles.modalClose} onClick={() => setShowPurchaseModal(false)}>×</button>
             
@@ -921,35 +877,21 @@ export default function SigilForge() {
                 ))}
               </div>
 
-              {/* Error */}
-              {stripeError && (
-                <div style={styles.errorBox}>{stripeError}</div>
-              )}
-
               {/* Actions */}
               <div style={styles.modalActions}>
-                {!purchasing ? (
-                  <>
-                    <button className="btn" style={styles.stripeBtn} onClick={handlePurchase}>
-                      {selectedTier === "monthly" 
-                        ? `Subscribe — ${selectedTierData?.price}/month`
-                        : `Pay ${selectedTierData?.price}`
-                      }
-                    </button>
-                    <p style={styles.stripeNote}>
-                      Secure payment via Stripe
-                    </p>
-                    {selectedTier === "monthly" && (
-                      <p style={styles.subTerms}>
-                        Subscription renews monthly. Cancel anytime.
-                      </p>
-                    )}
-                  </>
-                ) : (
-                  <div style={styles.processingPayment}>
-                    <div style={styles.spinner} />
-                    <span>Connecting to Stripe...</span>
-                  </div>
+                <button className="btn" style={styles.stripeBtn} onClick={handlePurchase}>
+                  {selectedTier === "monthly" 
+                    ? `Subscribe — ${selectedTierData?.price}/month`
+                    : `Pay ${selectedTierData?.price}`
+                  }
+                </button>
+                <p style={styles.stripeNote}>
+                  Secure payment via Stripe
+                </p>
+                {selectedTier === "monthly" && (
+                  <p style={styles.subTerms}>
+                    Subscription renews monthly. Cancel anytime.
+                  </p>
                 )}
               </div>
             </div>
