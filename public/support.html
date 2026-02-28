@@ -15,60 +15,59 @@
             line-height: 1.7;
             color: #e8dcc8;
             background: #0a0a08;
-            min-height: 100vh;
             padding: 40px 20px;
+            min-height: 100vh;
         }
         .container {
-            max-width: 640px;
+            max-width: 720px;
             margin: 0 auto;
-        }
-        header {
-            text-align: center;
-            margin-bottom: 48px;
-        }
-        .logo {
-            font-family: 'Times New Roman', serif;
-            font-size: 36px;
-            letter-spacing: 8px;
-            color: #c9a84c;
-            margin-bottom: 8px;
-        }
-        .tagline {
-            font-style: italic;
-            color: rgba(232,220,200,0.5);
-            font-size: 16px;
-        }
-        .divider {
-            width: 100px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent);
-            margin: 16px auto;
+            background: #111110;
+            padding: 48px;
+            border-radius: 12px;
+            border: 1px solid rgba(201, 168, 76, 0.2);
         }
         h1 {
-            font-size: 24px;
-            font-weight: 400;
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 8px;
             color: #c9a84c;
-            text-align: center;
-            letter-spacing: 4px;
-            margin-bottom: 40px;
+            font-family: 'Georgia', serif;
+            letter-spacing: 2px;
         }
-        .faq-item {
+        .subtitle {
+            color: rgba(232, 220, 200, 0.5);
+            font-size: 14px;
             margin-bottom: 32px;
-            padding-bottom: 32px;
-            border-bottom: 1px solid rgba(201,168,76,0.1);
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+            font-style: italic;
         }
-        .faq-item:last-child {
-            border-bottom: none;
+        h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 32px;
+            margin-bottom: 16px;
+            color: #c9a84c;
+            font-family: 'Georgia', serif;
         }
         h3 {
-            font-size: 18px;
-            font-weight: 500;
-            color: #c9a84c;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 24px;
             margin-bottom: 12px;
+            color: #e8dcc8;
         }
         p {
-            color: rgba(232,220,200,0.7);
-            margin-bottom: 12px;
+            margin-bottom: 16px;
+            color: rgba(232, 220, 200, 0.8);
+        }
+        ul {
+            margin-bottom: 16px;
+            padding-left: 24px;
+        }
+        li {
+            margin-bottom: 8px;
+            color: rgba(232, 220, 200, 0.8);
         }
         a {
             color: #c9a84c;
@@ -77,112 +76,128 @@
         a:hover {
             text-decoration: underline;
         }
-        .contact-section {
-            background: rgba(201,168,76,0.05);
-            border: 1px solid rgba(201,168,76,0.2);
-            padding: 32px;
-            text-align: center;
-            margin-top: 48px;
+        .faq-item {
+            margin-bottom: 28px;
+            padding-bottom: 28px;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.1);
         }
-        .contact-section h2 {
-            font-size: 18px;
+        .faq-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .faq-item h3 {
             color: #c9a84c;
-            letter-spacing: 3px;
+            margin-bottom: 12px;
+        }
+        .contact-box {
+            background: rgba(201, 168, 76, 0.08);
+            padding: 28px;
+            border-radius: 8px;
+            margin-top: 32px;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            text-align: center;
+        }
+        .contact-box h3 {
+            margin-top: 0;
+            font-size: 18px;
             margin-bottom: 16px;
-            font-weight: 400;
+            color: #c9a84c;
         }
         .email-link {
-            font-size: 20px;
-            color: #c9a84c;
             display: inline-block;
-            margin-top: 8px;
+            padding: 12px 32px;
+            background: rgba(201, 168, 76, 0.15);
+            border: 1px solid rgba(201, 168, 76, 0.4);
+            color: #c9a84c;
+            font-size: 16px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
         }
-        .links {
-            display: flex;
-            justify-content: center;
-            gap: 32px;
-            margin-top: 48px;
-            padding-top: 32px;
-            border-top: 1px solid rgba(201,168,76,0.1);
+        .email-link:hover {
+            background: rgba(201, 168, 76, 0.25);
+            text-decoration: none;
         }
-        .links a {
-            font-size: 14px;
-            color: rgba(232,220,200,0.4);
-        }
-        footer {
+        .footer {
             text-align: center;
-            margin-top: 48px;
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(201, 168, 76, 0.1);
+            color: rgba(232, 220, 200, 0.3);
             font-size: 13px;
-            color: rgba(232,220,200,0.3);
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 32px 24px;
+            }
+            h1 {
+                font-size: 26px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <div class="logo">SIGIL FORGE</div>
-            <div class="tagline">Transform desire into symbol</div>
-            <div class="divider"></div>
-        </header>
+        <h1>Support</h1>
+        <p class="subtitle">Frequently asked questions and help</p>
 
-        <h1>SUPPORT</h1>
+        <h2>Frequently Asked Questions</h2>
 
         <div class="faq-item">
             <h3>How do I create a sigil?</h3>
-            <p>Open the app and type your desire or intention in the text field. Tap "Begin the Ritual" to watch as your words are transformed through the traditional process: vowels are removed, duplicate letters are eliminated, and the remaining consonants are mapped to geometric forms to create your unique sigil.</p>
+            <p>Enter your intention or desire in the text field (for example, "I am confident" or "I attract abundance"). Click "Begin the Ritual" and watch as your words are transformed into a unique geometric symbol. The process follows the traditional chaos magick method: vowels are removed, duplicate letters eliminated, and the remaining consonants are mapped to sacred geometry.</p>
         </div>
 
         <div class="faq-item">
-            <h3>Why is there a watermark on my sigil?</h3>
-            <p>The preview version includes a watermark. To download your sigil in full HD resolution without the watermark, tap "Unlock & Download" and choose one of the purchase options: single sigil unlock, monthly subscription, or lifetime access.</p>
+            <h3>Why does my sigil have a watermark?</h3>
+            <p>The preview version includes a watermark. To download your sigil in full HD resolution (2000×2000 pixels) without the watermark, click "Unlock & Download" and choose a purchase option: Single Sigil (£0.99) or Lifetime Access (£9.99).</p>
         </div>
 
         <div class="faq-item">
             <h3>What's the difference between the purchase options?</h3>
-            <p><strong>Single Sigil (£0.99)</strong> — Unlocks the current sigil only. Perfect if you just need one.<br><br>
-            <strong>Monthly (£2.99/month)</strong> — Unlimited sigil downloads while subscribed. Cancel anytime in Settings → Apple ID → Subscriptions.<br><br>
-            <strong>Lifetime (£9.99)</strong> — One-time payment for unlimited sigils forever. Best value if you plan to create multiple sigils.</p>
+            <p><strong>Single Sigil (£0.99)</strong> — Unlocks one sigil for download. Perfect if you just need one specific sigil.<br><br>
+            <strong>Lifetime Access (£9.99)</strong> — Unlimited sigil downloads forever. Create as many sigils as you want, whenever you want. Best value if you plan to create multiple sigils.</p>
         </div>
 
         <div class="faq-item">
-            <h3>How do I cancel my subscription?</h3>
-            <p>Go to your device's Settings → tap your Apple ID at the top → Subscriptions → Sigil Forge → Cancel Subscription. Your access continues until the end of the current billing period.</p>
+            <h3>Will the same intention always create the same sigil?</h3>
+            <p>Yes. Sigil Forge uses a deterministic algorithm — entering the exact same text will always produce the exact same sigil. This is by design: your sigil is YOUR unique symbol for that intention.</p>
         </div>
 
         <div class="faq-item">
-            <h3>How do I restore my purchase on a new device?</h3>
-            <p>If you purchased Lifetime Access or have an active subscription, open the purchase sheet and tap "Restore Purchases". Make sure you're signed into the same Apple ID you used for the original purchase.</p>
-        </div>
-
-        <div class="faq-item">
-            <h3>Why does the same text create the same sigil?</h3>
-            <p>This is intentional. Each desire produces a unique, deterministic sigil — your personal symbol. The same intention will always generate the same glyph, making it truly "yours".</p>
+            <h3>What if I lose my Lifetime Access?</h3>
+            <p>Lifetime Access is stored in your browser. If you clear your browser data or switch devices, you can contact us at <a href="mailto:support@super444.com">support@super444.com</a> with your Stripe receipt email and we'll help you restore access.</p>
         </div>
 
         <div class="faq-item">
             <h3>How do I request a refund?</h3>
-            <p>All purchases are processed by Apple. To request a refund, visit <a href="https://reportaproblem.apple.com" target="_blank">reportaproblem.apple.com</a> and sign in with your Apple ID.</p>
+            <p>For refund requests, contact us at <a href="mailto:support@super444.com">support@super444.com</a>. Please include your receipt or the email you used for purchase. Note that refunds for Single Sigil purchases are not available once the sigil has been downloaded.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>How do I use my sigil?</h3>
+            <p>Traditional practice involves three steps: First, meditate on the sigil until you can visualise it clearly. Second, "charge" it during a moment of focused concentration or emotional intensity. Third — and most importantly — forget about it. The sigil works best when your conscious mind releases attachment to the outcome.</p>
+            <p>You can print your sigil, set it as a wallpaper, carry it with you, or incorporate it into any personal practice that resonates with you.</p>
         </div>
 
         <div class="faq-item">
             <h3>Is my data private?</h3>
-            <p>Yes. Sigil Forge does not collect, store, or transmit any personal data. Your desires and sigils remain entirely on your device. See our <a href="privacy-policy.html">Privacy Policy</a> for details.</p>
+            <p>Absolutely. Your intentions and sigils are generated entirely in your browser. Nothing is sent to any server. We don't track what you type, and we have no access to your sigils. Payments are processed by Stripe — we never see your card details. See our <a href="/privacy-policy.html">Privacy Policy</a> for full details.</p>
         </div>
 
-        <div class="contact-section">
-            <h2>STILL NEED HELP?</h2>
-            <p>We typically respond within 24 hours</p>
+        <div class="faq-item">
+            <h3>Something isn't working. What should I do?</h3>
+            <p>Try refreshing the page (Cmd+Shift+R on Mac, Ctrl+Shift+R on Windows). If the issue persists, try a different browser. If you're still having trouble, contact us with details about what's happening and we'll help resolve it.</p>
+        </div>
+
+        <div class="contact-box">
+            <h3>Still need help?</h3>
+            <p>Contact us and we'll respond as soon as possible.</p>
             <a href="mailto:support@super444.com" class="email-link">support@super444.com</a>
         </div>
 
-        <div class="links">
-            <a href="privacy-policy.html">Privacy Policy</a>
-            <a href="terms-of-service.html">Terms of Service</a>
-        </div>
-
-        <footer>
+        <div class="footer">
             © 2026 Axel Films Ltd. All rights reserved.
-        </footer>
+        </div>
     </div>
 </body>
 </html>
