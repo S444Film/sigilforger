@@ -1023,7 +1023,7 @@ const styles = {
   },
   stepDesc: {
     fontSize: 13,
-    color: "rgba(232,220,200,0.5)",
+    color: "rgba(232,220,200,0.3)",
     textAlign: "center",
     lineHeight: 1.5,
     fontStyle: "italic",
