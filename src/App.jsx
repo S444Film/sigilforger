@@ -16,7 +16,6 @@ import { useState, useRef, useEffect, useCallback } from "react";
 const PAYMENT_LINKS = {
   single: "https://buy.stripe.com/14A00laibbqJ6Dg0hP7g400",
   lifetime: "https://buy.stripe.com/cNi8wR61VdyR0eS1lT7g402",
-  monthly: "https://buy.stripe.com/bJe3cxeyr7at3r41lT7g401",
 };
 
 // Sigil generation
@@ -309,17 +308,6 @@ const TIERS = [
     features: ["High-resolution 2000×2000 JPG", "No watermark", "Instant download"],
   },
   { 
-    id: "monthly", 
-    name: "Monthly", 
-    desc: "Unlimited sigils",
-    price: "£2.99",
-    sub: "/month",
-    link: PAYMENT_LINKS.monthly,
-    icon: "↻",
-    badge: "POPULAR",
-    features: ["Unlimited sigil downloads", "High-resolution exports", "No watermarks", "Cancel anytime"],
-  },
-  { 
     id: "lifetime", 
     name: "Lifetime Access", 
     desc: "Unlimited sigils forever",
@@ -361,7 +349,7 @@ export default function SigilForge() {
           setShowResult(true);
           setAnimStep(3);
           setIsPurchased(true);
-          if (tier === "lifetime" || tier === "monthly") {
+          if (tier === "lifetime") {
             setHasUnlimitedAccess(true);
             localStorage.setItem("sigil_access", tier);
           }
@@ -392,7 +380,7 @@ export default function SigilForge() {
 
     // Check for existing access
     const access = localStorage.getItem("sigil_access");
-    if (access === "lifetime" || access === "monthly") {
+    if (access === "lifetime") {
       setHasUnlimitedAccess(true);
     }
   }, []);
@@ -880,19 +868,11 @@ export default function SigilForge() {
               {/* Actions */}
               <div style={styles.modalActions}>
                 <button className="btn" style={styles.stripeBtn} onClick={handlePurchase}>
-                  {selectedTier === "monthly" 
-                    ? `Subscribe — ${selectedTierData?.price}/month`
-                    : `Pay ${selectedTierData?.price}`
-                  }
+                  Pay {selectedTierData?.price}
                 </button>
                 <p style={styles.stripeNote}>
                   Secure payment via Stripe
                 </p>
-                {selectedTier === "monthly" && (
-                  <p style={styles.subTerms}>
-                    Subscription renews monthly. Cancel anytime.
-                  </p>
-                )}
               </div>
             </div>
           </div>
@@ -1023,7 +1003,7 @@ const styles = {
   },
   stepDesc: {
     fontSize: 13,
-    color: "rgba(232,220,200,0.3)",
+    color: "rgba(232,220,200,0.5)",
     textAlign: "center",
     lineHeight: 1.5,
     fontStyle: "italic",
