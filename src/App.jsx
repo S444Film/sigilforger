@@ -6,8 +6,6 @@ import { useState, useRef, useEffect, useCallback } from "react";
 // 1. Create products in Stripe Dashboard (https://dashboard.stripe.com/products)
 // 2. Create prices for each product:
 //    - Single Unlock: £0.99 one-time
-//    - Lifetime Access: £9.99 one-time  
-//    - Monthly Subscription: £2.99 recurring/month
 // 3. Copy the Price IDs below
 // ============================================================
 // ============================================================
@@ -15,7 +13,6 @@ import { useState, useRef, useEffect, useCallback } from "react";
 // ============================================================
 const PAYMENT_LINKS = {
   single: "https://buy.stripe.com/14A00laibbqJ6Dg0hP7g400",
-  lifetime: "https://buy.stripe.com/cNi8wR61VdyR0eS1lT7g402",
 };
 
 // Sigil generation
@@ -298,24 +295,14 @@ const STEPS = [
 ];
 
 const TIERS = [
-  { 
-    id: "single", 
-    name: "Single Sigil", 
+  {
+    id: "single",
+    name: "Single Sigil",
     desc: "Unlock this sigil",
     price: "£0.99",
     link: PAYMENT_LINKS.single,
     icon: "⬡",
     features: ["High-resolution 2000×2000 JPG", "No watermark", "Instant download"],
-  },
-  { 
-    id: "lifetime", 
-    name: "Lifetime Access", 
-    desc: "Unlimited sigils forever",
-    price: "£9.99",
-    link: PAYMENT_LINKS.lifetime,
-    icon: "∞",
-    badge: "BEST VALUE",
-    features: ["Unlimited sigil downloads", "High-resolution exports", "No watermarks ever", "One-time payment", "Future features included"],
   },
 ];
 
@@ -329,7 +316,7 @@ export default function SigilForge() {
   const [showPurchaseModal, setShowPurchaseModal] = useState(false);
   const [selectedTier, setSelectedTier] = useState("single");
   const [isPurchased, setIsPurchased] = useState(false);
-  const [hasUnlimitedAccess, setHasUnlimitedAccess] = useState(false);
+  const [hasUnlimitedAccess] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const canvasRef = useRef(null);
 
@@ -349,10 +336,6 @@ export default function SigilForge() {
           setShowResult(true);
           setAnimStep(3);
           setIsPurchased(true);
-          if (tier === "lifetime") {
-            setHasUnlimitedAccess(true);
-            localStorage.setItem("sigil_access", tier);
-          }
           setShowSuccess(true);
           sessionStorage.removeItem("sigil_pending");
           setTimeout(() => setShowSuccess(false), 5000);
@@ -378,11 +361,6 @@ export default function SigilForge() {
       window.history.replaceState({}, "", window.location.pathname);
     }
 
-    // Check for existing access
-    const access = localStorage.getItem("sigil_access");
-    if (access === "lifetime") {
-      setHasUnlimitedAccess(true);
-    }
   }, []);
 
   useEffect(() => {

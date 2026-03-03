@@ -28,8 +28,6 @@ In [Stripe Dashboard → Products](https://dashboard.stripe.com/products), creat
 | Product | Type | Price |
 |---------|------|-------|
 | Single Sigil Unlock | One-time | £0.99 |
-| Lifetime Access | One-time | £9.99 |
-| Monthly Subscription | Recurring (monthly) | £2.99 |
 
 ### 3. Get Your Keys
 
